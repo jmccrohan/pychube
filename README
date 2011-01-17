@@ -1,0 +1,54 @@
+----------------------
+Introduction:
+----------------------
+Pychube is a Python client for pachube.com.
+
+Pychube passes sensor readings, which are passed as arguments, to a 
+Pachube feed. The main advantage pychube has over a simple curl request, 
+is that pachube user details are stored in a .config file in the users 
+home directory. This ensures that API key is never disclosed via top or ps.
+
+Pychube was tested using Python 2.7.1 and Linux.
+
+It may work unaltered on Mac OSX, but I have not tested it.
+
+Windows is not supported at the moment.
+
+----------------------
+Setup:
+----------------------
+Place the following three lines into ~/.pychube, and personalise as 
+required:
+
+[pachube]
+apiKey=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+feedID=1234
+
+
+If you would like to install pychube, copy the file to /usr/bin:
+cp pychube /usr/bin/pychube
+
+Alternatively, you may run it from its current location by prefixing 
+with ./:
+./pychube
+
+----------------------
+Usage:
+----------------------
+Pass the sensor readings to pachube as a commandline parameter.
+For example, to update a single datastream feed with a value of 48:
+user@host:~# pychube 48
+
+Multiple datastream  feeds can be updated by comma separating the values:
+user@host:~# pychube 48,-5,100
+
+Datavalues can also be piped to pychube. This can be used in conjunction 
+with awk, sed or grep to manipulate the input:
+user@host:~# uptime | awk -F'( |,)' '{print $2}' | awk -F ":" '{print 
+$1}' | pychube
+
+
+----------------------
+TODO:
+----------------------
+Add Windows support.
